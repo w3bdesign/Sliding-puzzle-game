@@ -30,6 +30,13 @@ body {
     cursor: pointer; /* Pointer cursor on hover */
 }
 
+.puzzle-container .tile.empty {
+    background-color: transparent; /* No background */
+    border: none; /* No border */
+    box-shadow: none; /* No shadow */
+    cursor: default; /* Default cursor */
+}
+
 .puzzle-container .tile:hover {
     transform: scale(1.05); /* Slightly enlarge on hover */
 }

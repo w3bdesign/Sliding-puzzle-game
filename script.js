@@ -5,7 +5,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     numbers.forEach(num => {
         const tile = document.createElement("div");
-        tile.textContent = num === 0 ? "" : num; // Leave the tile empty if num is 0
+        if (num === 0) {
+            tile.classList.add("empty"); // Add empty class to the empty tile
+        } else {
+            tile.textContent = num;
+        }
         tile.classList.add("tile");
         puzzleContainer.appendChild(tile);
     });
