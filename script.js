@@ -22,11 +22,19 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function swapTiles(tile1, tile2) {
-    const temp = document.createElement("div");
-    puzzleContainer.insertBefore(temp, tile1);
-    puzzleContainer.insertBefore(tile1, tile2);
-    puzzleContainer.insertBefore(tile2, temp);
-    puzzleContainer.removeChild(temp);
+    tile1.classList.add("moving");
+    tile2.classList.add("moving");
+
+    setTimeout(() => {
+        const temp = document.createElement("div");
+        puzzleContainer.insertBefore(temp, tile1);
+        puzzleContainer.insertBefore(tile1, tile2);
+        puzzleContainer.insertBefore(tile2, temp);
+        puzzleContainer.removeChild(temp);
+
+        tile1.classList.remove("moving");
+        tile2.classList.remove("moving");
+    }, 200); // Match the duration of the CSS transition
   }
 
   numbers.forEach((num) => {
