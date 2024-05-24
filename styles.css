@@ -27,6 +27,7 @@ body {
     font-weight: bold;
     color: #ffffff; /* White text */
     transition: transform 0.2s; /* Smooth transition for hover effect */
+    cursor: pointer; /* Pointer cursor on hover */
 }
 
 .puzzle-container .tile:hover {
