@@ -28,11 +28,9 @@ body {
     color: #ffffff; /* White text */
     transition: transform 0.2s ease-in-out; /* Smooth transition for hover and move effect */
     cursor: pointer; /* Pointer cursor on hover */
+    position: relative; /* Ensure tiles are positioned relative to the container */
 }
 
-.puzzle-container .tile.moving {
-    transition: transform 0.2s ease-in-out; /* Smooth transition for moving tiles */
-}
 
 .puzzle-container .tile.empty {
     background-color: transparent; /* No background */

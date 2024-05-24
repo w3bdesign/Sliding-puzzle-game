@@ -22,19 +22,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function swapTiles(tile1, tile2) {
-    tile1.classList.add("moving");
-    tile2.classList.add("moving");
-
-    setTimeout(() => {
-        const temp = document.createElement("div");
-        puzzleContainer.insertBefore(temp, tile1);
-        puzzleContainer.insertBefore(tile1, tile2);
-        puzzleContainer.insertBefore(tile2, temp);
-        puzzleContainer.removeChild(temp);
-
-        tile1.classList.remove("moving");
-        tile2.classList.remove("moving");
-    }, 200); // Match the duration of the CSS transition
+    const temp = document.createElement("div");
+    puzzleContainer.insertBefore(temp, tile1);
+    puzzleContainer.insertBefore(tile1, tile2);
+    puzzleContainer.insertBefore(tile2, temp);
+    puzzleContainer.removeChild(temp);
   }
 
   numbers.forEach((num) => {
@@ -48,7 +40,28 @@ document.addEventListener("DOMContentLoaded", () => {
     tile.addEventListener("click", () => {
       const emptyTile = document.querySelector(".tile.empty");
       if (isAdjacent(tile, emptyTile)) {
-        swapTiles(tile, emptyTile);
+        const emptyTileIndex = Array.prototype.indexOf.call(puzzleContainer.children, emptyTile);
+        const tileIndex = Array.prototype.indexOf.call(puzzleContainer.children, tile);
+
+        const emptyTileRect = emptyTile.getBoundingClientRect();
+        const tileRect = tile.getBoundingClientRect();
+
+        const deltaX = emptyTileRect.left - tileRect.left;
+        const deltaY = emptyTileRect.top - tileRect.top;
+
+        tile.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+        emptyTile.style.transform = `translate(${-deltaX}px, ${-deltaY}px)`;
+
+        setTimeout(() => {
+            tile.style.transform = "";
+            emptyTile.style.transform = "";
+
+            const temp = document.createElement("div");
+            puzzleContainer.insertBefore(temp, tile);
+            puzzleContainer.insertBefore(tile, emptyTile);
+            puzzleContainer.insertBefore(emptyTile, temp);
+            puzzleContainer.removeChild(temp);
+        }, 200); // Match the duration of the CSS transition
       }
     });
 
