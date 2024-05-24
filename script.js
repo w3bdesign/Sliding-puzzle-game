@@ -40,19 +40,19 @@ document.addEventListener("DOMContentLoaded", () => {
     tile.addEventListener("click", () => {
       const emptyTile = document.querySelector(".tile.empty");
       if (isAdjacent(tile, emptyTile)) {
-        const emptyTileIndex = Array.prototype.indexOf.call(puzzleContainer.children, emptyTile);
-        const tileIndex = Array.prototype.indexOf.call(puzzleContainer.children, tile);
-
         const emptyTileRect = emptyTile.getBoundingClientRect();
         const tileRect = tile.getBoundingClientRect();
 
         const deltaX = emptyTileRect.left - tileRect.left;
         const deltaY = emptyTileRect.top - tileRect.top;
 
+        tile.style.transition = "transform 0.2s ease-in-out";
+        emptyTile.style.transition = "transform 0.2s ease-in-out";
+
         tile.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
         emptyTile.style.transform = `translate(${-deltaX}px, ${-deltaY}px)`;
 
-        setTimeout(() => {
+        tile.addEventListener("transitionend", function handler() {
             tile.style.transform = "";
             emptyTile.style.transform = "";
 
@@ -61,7 +61,9 @@ document.addEventListener("DOMContentLoaded", () => {
             puzzleContainer.insertBefore(tile, emptyTile);
             puzzleContainer.insertBefore(emptyTile, temp);
             puzzleContainer.removeChild(temp);
-        }, 200); // Match the duration of the CSS transition
+
+            tile.removeEventListener("transitionend", handler);
+        });
       }
     });
 
